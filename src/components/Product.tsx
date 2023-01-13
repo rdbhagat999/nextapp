@@ -27,6 +27,7 @@ export default function ProductCard({
           className="product-image"
           alt={product?.name}
           loading="eager"
+          priority={true}
         />
       )}
       <div className="mt-5 flex">

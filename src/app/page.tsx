@@ -1,3 +1,5 @@
+import { useSearchParams } from "next/navigation";
+
 import ProductCard from "@/components/Product";
 import SearchForm from "@/components/SearchForm";
 import { API_ROOT, APP_ROOT, TOKEN } from "@/utils/env";
@@ -5,14 +7,14 @@ import { IProduct } from "@/utils/types";
 
 export const revalidate = 3600; // revalidate every hour
 
-async function getProducts() {
+async function getProducts(query: string, page: string) {
   // This request should be cached until manually invalidated.
   // `force-cache` is similar to `getStaticProps`.
   // `no-store` is similar to `getServerSideProps`.
   // `force-cache` is the default and can be omitted.
-  const url = new URL(APP_ROOT);
-  const query = url.searchParams.get("q") || "";
-  const page = url.searchParams.get("page") || "1";
+  // const url = new URL(APP_ROOT);
+  // const query = url?.searchParams?.get("q") || "";
+  // const page = url?.searchParams?.get("page") || "1";
   const limit = "15";
   const filter = query.length
     ? `&filter[name][_contains]=${encodeURIComponent(query)}`
@@ -40,11 +42,20 @@ async function getProducts() {
       thumbnail: `${API_ROOT}/assets/${p?.thumbnail}?access_token=${TOKEN}`,
     })) || [];
 
-  return { products, query };
+  return products;
 }
 
-export default async function Home() {
-  const { products, query } = await getProducts();
+export default async function Home({
+  params,
+  searchParams,
+}: {
+  params: { id: string };
+  searchParams?: { [key: string]: string | undefined };
+}) {
+  const query = (searchParams && searchParams["q"]) || "";
+  const page = (searchParams && searchParams["page"]) || "1";
+
+  const products = await getProducts(query, page);
 
   return (
     <main className="text-center mx-auto text-gray-700 p-4">
