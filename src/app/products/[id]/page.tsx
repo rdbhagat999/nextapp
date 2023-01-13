@@ -1,22 +1,16 @@
-import { API_ROOT, TOKEN } from "@/utils/env";
+import { getProducts, getProduct } from "@/lib/product_lib";
 import { IProduct } from "@/utils/types";
 import Image from "next/image";
 
-async function getProduct(id: string) {
-  const response = await fetch(
-    `${API_ROOT}/items/products/${id}?access_token=${TOKEN}`
-  );
-  const respBody: any = await response.json();
-  const productData = respBody?.data as IProduct;
+export const dynamicParams = true;
+export const revalidate = 3600;
 
-  const product = {
-    ...productData,
-    thumbnail: `${API_ROOT}/assets/${productData?.thumbnail}?access_token=${TOKEN}`,
-  } as IProduct;
+export async function generateStaticParams() {
+  const { products } = await getProducts();
 
-  // console.log("server", product);
-
-  return product;
+  return products.map((product) => ({
+    id: product.id.toString(),
+  }));
 }
 
 export default async function ProductPage({
@@ -25,6 +19,7 @@ export default async function ProductPage({
   params: { id: string };
 }) {
   const product: IProduct = await getProduct(id);
+
   const labels = [
     "price",
     "quantity",
@@ -42,6 +37,7 @@ export default async function ProductPage({
           alt={product?.name}
           width={500}
           height={500}
+          loading="eager"
           className="w-full object-cover h-90"
         />
         <section>
