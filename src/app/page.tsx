@@ -1,6 +1,6 @@
 import ProductCard from "@/components/Product";
 import SearchForm from "@/components/SearchForm";
-import { API_ROOT, TOKEN } from "@/utils/env";
+import { API_ROOT, APP_ROOT, TOKEN } from "@/utils/env";
 import { IProduct } from "@/utils/types";
 
 export const revalidate = 3600; // revalidate every hour
@@ -10,7 +10,7 @@ async function getProducts() {
   // `force-cache` is similar to `getStaticProps`.
   // `no-store` is similar to `getServerSideProps`.
   // `force-cache` is the default and can be omitted.
-  const url = new URL("http://localhost:3000/");
+  const url = new URL(APP_ROOT);
   const query = url.searchParams.get("q") || "";
   const page = url.searchParams.get("page") || "1";
   const limit = "15";
