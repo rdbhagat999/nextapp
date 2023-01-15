@@ -28,6 +28,13 @@ export default function ProductCard({
           alt={product?.name}
           loading="eager"
           priority={true}
+          fill={true}
+          blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII="
+          placeholder="blur"
+          style={{
+            maxWidth: "100%",
+            height: "auto",
+          }}
         />
       )}
       <div className="mt-5 flex">
