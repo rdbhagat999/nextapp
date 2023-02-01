@@ -16,7 +16,6 @@ export default async function Home({
   const { products, query } = await getProducts(q, page);
 
   return (
-    <main className="text-center mx-auto text-gray-700 p-4">
       <section>
         <SearchForm query={query} />
 
@@ -28,6 +27,5 @@ export default async function Home({
           ))}
         </ul>
       </section>
-    </main>
   );
 }

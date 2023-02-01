@@ -19,7 +19,9 @@ export default function RootLayout({
       <head />
       <body>
         <Header />
-        {children}
+        <main className="text-center mx-auto text-gray-700 p-4">
+          {children}
+        </main>
         <Footer />
       </body>
     </html>

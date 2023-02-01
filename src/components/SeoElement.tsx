@@ -8,6 +8,7 @@ export type HeadProps = {
 export default function SeoElement({ ...props }: HeadProps) {
   return (
     <>
+      <link rel="preload" as="image" href={props?.image} />
       {/* Primary Meta Tags */}
       <title>{props?.title}</title>
 

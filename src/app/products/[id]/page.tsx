@@ -38,6 +38,7 @@ export default async function ProductPage({
           width={500}
           height={500}
           loading="eager"
+          fetch-priority="high"
           className="w-full object-cover h-90"
         />
         <section>
