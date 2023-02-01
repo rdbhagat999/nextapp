@@ -19,7 +19,7 @@ export default function RootLayout({
       <head />
       <body>
         <Header />
-        <main className="text-center mx-auto text-gray-700 p-4">
+        <main className="mx-auto text-gray-700 p-4">
           {children}
         </main>
         <Footer />

@@ -16,7 +16,7 @@ export default async function Home({
   const { products, query } = await getProducts(q, page);
 
   return (
-      <section>
+      <section className="text-center">
         <SearchForm query={query} />
 
         <ul className="grid sm:grid-cols-2 md:grid-cols-3 mt-5 gap-2">
