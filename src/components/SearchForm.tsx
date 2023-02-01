@@ -1,6 +1,6 @@
 export default function SearchForm({ query }: { query: string }) {
   return (
-    <form className="flex justify-center items-center w-full gap-2">
+    <form className="flex flex-col justify-center items-center w-full gap-2">
       <input
         type="search"
         name="q"
