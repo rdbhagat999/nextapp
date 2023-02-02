@@ -4,7 +4,7 @@ import { API_ROOT, TOKEN } from "@/utils/env";
 import { IProduct } from "@/utils/types";
 
 export async function getProducts(query: string = "", page: string = "1") {
-  const limit = "50";
+  const limit = "20";
   const filter = query.length
     ? `&filter[name][_contains]=${encodeURIComponent(query)}`
     : "";
