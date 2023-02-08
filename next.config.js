@@ -5,6 +5,9 @@ const nextConfig = {
     appDir: true,
   },
   images: {
+    dangerouslyAllowSVG: true,
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    minimumCacheTTL: 60,
     domains: ["tixu9ix9.directus.app"],
   },
   async headers() {

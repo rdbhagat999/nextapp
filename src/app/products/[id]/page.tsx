@@ -1,9 +1,9 @@
-import { getProducts, getProduct } from "@/lib/product_lib";
+import { getProducts, getProduct, preload } from "@/lib/product_lib";
 import { IProduct } from "@/utils/types";
 import Image from "next/image";
 
 export const dynamicParams = true;
-export const revalidate = 3600;
+export const revalidate = 36000; // revalidate this page every 36000 seconds
 
 export async function generateStaticParams() {
   const { products } = await getProducts();
@@ -18,6 +18,7 @@ export default async function ProductPage({
 }: {
   params: { id: string };
 }) {
+  // starting loading the product data now
   const product: IProduct = await getProduct(id);
 
   const labels = [
@@ -47,7 +48,9 @@ export default async function ProductPage({
 
           <ul className="grid grid-cols-2 mt-5 mb-5 text-3xl">
             {labels?.map((label: string) => (
-              <li key={label} className="mt-3">
+              <li
+                key={label}
+                className="mt-3">
                 <p className="font-bold">{label}</p>
                 <p>
                   {label == "price"

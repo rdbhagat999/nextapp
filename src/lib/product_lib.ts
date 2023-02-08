@@ -1,9 +1,8 @@
 import "server-only";
-
 import { API_ROOT, TOKEN } from "@/utils/env";
 import { IProduct } from "@/utils/types";
 
-export async function getProducts(query: string = "", page: string = "1") {
+export const getProducts = async (query: string = "", page: string = "1") => {
   const limit = "20";
   const filter = query.length
     ? `&filter[name][_contains]=${encodeURIComponent(query)}`
@@ -12,7 +11,9 @@ export async function getProducts(query: string = "", page: string = "1") {
   const offset = (parseInt(page, 10) - 1) * parseInt(limit, 10);
   const reqUrl = `${API_ROOT}/items/products?access_token=${TOKEN}&q=${query}&page=${page}&offset=${offset}&limit=${limit}${filter}`;
 
-  const response = await fetch(reqUrl);
+  // revalidate this page every 36000 seconds, since the getData's fetch
+  // request has `revalidate: 36000`.
+  const response = await fetch(reqUrl, { next: { revalidate: 36000 } });
 
   // Recommendation: handle errors
   if (!response.ok) {
@@ -29,9 +30,13 @@ export async function getProducts(query: string = "", page: string = "1") {
     })) || [];
 
   return { products, query };
-}
+};
 
-export async function getProduct(id: string) {
+export const preload = (id: string) => {
+  void getProduct(id);
+};
+
+export const getProduct = async (id: string) => {
   const response = await fetch(
     `${API_ROOT}/items/products/${id}?access_token=${TOKEN}`
   );
@@ -46,4 +51,4 @@ export async function getProduct(id: string) {
   // console.log("server", product);
 
   return product;
-}
+};
