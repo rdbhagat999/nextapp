@@ -1,3 +1,5 @@
+import { Suspense } from "react";
+import Loading from "../components/loading";
 import ProductCard from "@/components/Product";
 import SearchForm from "@/components/SearchForm";
 import { getProducts } from "@/lib/product_lib";
@@ -17,7 +19,9 @@ export default async function Home({
 
   return (
     <section className="text-center">
-      <SearchForm query={query} />
+      <Suspense fallback={<Loading />}>
+        <SearchForm query={query} />
+      </Suspense>
 
       <ul className="grid sm:grid-cols-2 md:grid-cols-3 mt-5 gap-2">
         {products?.map((product) => (
