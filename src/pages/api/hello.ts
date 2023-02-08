@@ -22,7 +22,11 @@ export default async function handler(
     case "GET":
       // Get data from your database
       try {
-        await limiter.check(res, 10, "CACHE_TOKEN"); // 10 requests per minute
+        await limiter.check(res, 10, "CACHE_TOKEN");
+        res.setHeader(
+          "Cache-Control",
+          "public, s-maxage=10, stale-while-revalidate=59"
+        ); // 10 requests per minute
         res.status(200).json({ name: "John Doe" });
       } catch (error) {
         res.status(429).json({ name: "", error: "Rate limit exceeded" });
