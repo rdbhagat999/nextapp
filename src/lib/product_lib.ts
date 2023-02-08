@@ -37,8 +37,11 @@ export const preload = (id: string) => {
 };
 
 export const getProduct = async (id: string) => {
+  // revalidate this page every 36000 seconds, since the getData's fetch
+  // request has `revalidate: 36000`.
   const response = await fetch(
-    `${API_ROOT}/items/products/${id}?access_token=${TOKEN}`
+    `${API_ROOT}/items/products/${id}?access_token=${TOKEN}`,
+    { next: { revalidate: 36000 } }
   );
   const respBody: any = await response.json();
   const productData = respBody?.data as IProduct;
