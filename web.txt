@@ -1,0 +1,9 @@
+1. Use dynamic imports for client components.
+2. Cache requests by importing cache function from react.
+3. Set cache-control headers
+4. Use preconnect for all external links and scripts
+5. Move scripts to the bottom of body tag if possible.
+6. Defer external scripts that should be executed in order, and add async attribute to external scripts that can execute independently.
+7. Preload crtitical assets and lazy load below the view port assets.
+8. Add fetch-priority, loading, and decoding attributes to images.
+9. Preconnect and preload fonts.

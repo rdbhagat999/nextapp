@@ -3,6 +3,7 @@ import Image from "next/image";
 import { getProducts, getProduct } from "@/lib/product_lib";
 import { IProduct } from "@/utils/types";
 import Loading from "./loading";
+import AddToCart from "@/components/AddToCart";
 
 export const dynamicParams = true;
 export const revalidate = 36000; // revalidate this page every 36000 seconds
@@ -76,6 +77,8 @@ export default async function ProductPage({
                 </li>
               ))}
             </ul>
+
+            <AddToCart product={product} />
           </Suspense>
         </section>
       </article>
